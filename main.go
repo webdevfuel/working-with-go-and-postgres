@@ -24,5 +24,7 @@ func main() {
 
 	r.Post("/books", create)
 
+	r.Get("/books", getAll)
+
 	http.ListenAndServe("localhost:3000", r)
 }
