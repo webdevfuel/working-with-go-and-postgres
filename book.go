@@ -64,7 +64,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var book Book
-	if err := DB.QueryRow("SELECT id, name, description FROM books WHERE id = $1;", bookID).Scan(&book.ID, &book.Name, &book.Description); err != nil {
+	if err := DB.Get(&book, "SELECT id, name, description FROM books WHERE id = $1;", bookID); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Printf("error querying book from books table with id %d %v", bookID, err)
 		return
