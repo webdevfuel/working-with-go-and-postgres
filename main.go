@@ -19,10 +19,6 @@ func main() {
 	r.Use(middleware.Logger)
 
 	r.Get("/", func(w http.ResponseWriter, _ *http.Request) {
-		err := DB.QueryRow("INSERT INTO books (name, description) VALUES ('The Greatest Book Ever', '');").Err()
-		if err != nil {
-			log.Printf("error insert book into books table %v", err)
-		}
 		w.Write([]byte("Hello World!"))
 	})
 
