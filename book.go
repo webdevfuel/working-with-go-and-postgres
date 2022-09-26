@@ -56,7 +56,7 @@ func getAll(w http.ResponseWriter, _ *http.Request) {
 	j, err := json.Marshal(books)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Printf("error marshalling books into json", err)
+		log.Printf("error marshalling books into json %v", err)
 		return
 	}
 
