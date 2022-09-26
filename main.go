@@ -16,5 +16,5 @@ func main() {
 		w.Write([]byte("Hello World!"))
 	})
 
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe("localhost:3000", r)
 }
