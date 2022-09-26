@@ -26,5 +26,7 @@ func main() {
 
 	r.Get("/books", getAll)
 
+	r.Get("/books/{bookID}", get)
+
 	http.ListenAndServe("localhost:3000", r)
 }

@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
+
+	"github.com/go-chi/chi/v5"
 )
 
 type Book struct {
@@ -54,6 +57,31 @@ func getAll(w http.ResponseWriter, _ *http.Request) {
 	}
 
 	j, err := json.Marshal(books)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Printf("error marshalling books into json %v", err)
+		return
+	}
+
+	w.Write(j)
+}
+
+func get(w http.ResponseWriter, r *http.Request) {
+	bookID, err := strconv.Atoi(chi.URLParam(r, "bookID"))
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Printf("error parsing %d from string into integer %v", bookID, err)
+		return
+	}
+
+	var book Book
+	if err := DB.QueryRow("SELECT id, name, description FROM books WHERE id = $1;", bookID).Scan(&book.ID, &book.Name, &book.Description); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Printf("error querying book from books table with id %d %v", bookID, err)
+		return
+	}
+
+	j, err := json.Marshal(book)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Printf("error marshalling books into json %v", err)
