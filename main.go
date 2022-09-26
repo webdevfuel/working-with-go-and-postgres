@@ -22,5 +22,7 @@ func main() {
 		w.Write([]byte("Hello World!"))
 	})
 
+	r.Post("/books", create)
+
 	http.ListenAndServe("localhost:3000", r)
 }
