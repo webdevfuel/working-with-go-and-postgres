@@ -13,11 +13,13 @@ type Book struct {
 	ID          int    `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
+	Author      string `json:"author"`
 }
 
 type CreateBookBody struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
+	Author      string `json:"author"`
 }
 
 func create(w http.ResponseWriter, r *http.Request) {
